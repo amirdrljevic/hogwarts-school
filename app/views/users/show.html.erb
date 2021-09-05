@@ -1,0 +1,31 @@
+<% provide(:title, @user.name) %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <%= gravatar_for @user %>
+        <%= @user.name %>
+      </h1>
+      <h2>
+        Basic info:
+      </h2>
+      <ul>
+        <li>
+          <b>E-mail: </b>
+          <%= @user.email %>
+        </li>
+        <li>
+          <b>Date of birth:</b>
+          <%= @user.date_of_birth %>
+        </li>
+        <li>
+          <b>Short bio:</b>
+          <%= @user.bio %>
+        </li>      
+        <li>
+          <%= if @user.has_muggle_relatives then "Has muggle relatives" else "Doesn't have muggle relatives" end %>
+        </li>  
+      </ul>    
+    </section>
+  </aside>
+</div>
