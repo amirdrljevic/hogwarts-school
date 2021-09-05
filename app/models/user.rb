@@ -6,7 +6,7 @@ class User < ApplicationRecord
                                    format: { with: VALID_EMAIL_REGEX },
                                    uniqueness: true 
   validates :date_of_birth,        presence: true
-  validates :has_muggle_relatives, presence: true
+  #validates :has_muggle_relatives, presence: true
   has_secure_password
 
   PASSWORD_FORMAT = /\A
