@@ -6,7 +6,7 @@ class User < ApplicationRecord
                                    format: { with: VALID_EMAIL_REGEX },
                                    uniqueness: true 
   validates :date_of_birth,        presence: true
-  #validates :has_muggle_relatives, presence: true
+  #validates :has_muggle_relatives, presence: true, :inclusion => {:in => %w(true, false)}
   has_secure_password
 
   PASSWORD_FORMAT = /\A
@@ -31,5 +31,4 @@ validates :password,
   confirmation: true, 
   on: :update
 
-  #validates :password, presence: true, length: { minimum: 8 }
 end

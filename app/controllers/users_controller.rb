@@ -11,6 +11,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      reset_session
+      log_in @user
       flash[:success] = "Dear #{ @user.name }, welcome to Hogwarts School of Witchcraft and Wizardry!"
       redirect_to @user
     else 
