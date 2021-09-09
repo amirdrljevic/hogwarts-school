@@ -18,8 +18,10 @@
       <%= f.label :bio, "Short biography" %>
       <%= f.text_area :bio, class: 'form-control' %>
 
-      <%= f.label :has_muggle_relatives, "Do you have muggle relatives?" %>
-      <%= f.check_box :has_muggle_relatives, class: 'form-control' %>
+      <%= f.label :has_muggle_relatives, class: "checkbox inline" do %>
+        <%= f.check_box :has_muggle_relatives %>
+        <span>Do you have muggle relatives?</span>
+      <% end %>
 
       <%= f.label :password %>
       <%= f.password_field :password, class: 'form-control' %>
