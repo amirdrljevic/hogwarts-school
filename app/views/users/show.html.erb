@@ -25,6 +25,10 @@
         <li>
           <%= if @user.has_muggle_relatives then "Has muggle relatives" else "Doesn't have muggle relatives" end %>
         </li>  
+        <li>
+          <b>House:</b>
+          <%= @user.house %>
+        </li>
       </ul>    
     </section>
   </aside>
