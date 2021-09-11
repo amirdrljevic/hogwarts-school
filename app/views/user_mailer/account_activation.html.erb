@@ -1,0 +1,10 @@
+<h1>Hogwarts School of Witchcraft and Wizardry</h1>
+
+<p>Dear <%= @user.name %>,</p>
+
+<p>
+Welcome to our school! Please click on the link below to activate your account:
+</p>
+
+<%= link_to "Activate", edit_account_activation_url(@user.activation_token,
+                                                    email: @user.email) %>

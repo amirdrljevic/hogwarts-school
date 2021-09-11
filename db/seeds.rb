@@ -6,7 +6,9 @@ User.create!(name:  "Example User",
   has_muggle_relatives: "1",
   house:                 ["Gryffindor", "Hufflepuff", "Slytherin", "Ravenclaw"].sample,
   password:              "Mostar123+",
-  password_confirmation: "Mostar123+")
+  password_confirmation: "Mostar123+",
+  activated:true,
+  activated_at: Time.zone.now)
 
 # Generate a bunch of additional users.
 99.times do |n|
@@ -24,5 +26,7 @@ User.create!(name:  name,
             has_muggle_relatives: has_muggle_relatives,
             house: house,
             password:              password,
-            password_confirmation: password)
+            password_confirmation: password,
+            activated: true,
+            activated_at: Time.zone.now)
 end
