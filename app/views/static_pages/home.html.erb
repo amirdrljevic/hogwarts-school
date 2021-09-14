@@ -1,16 +1,32 @@
 <% provide(:title, "Home") %>
 
+<% if logged_in? %>
+  <div class="row">
+    <aside class="col-md-4">
+      <section class="user_info">
+        <%= render 'shared/user_info' %>
+      </section>
+      <section class="spell_form">
+        <%= render 'shared/spell_form' %>
+      </section>
+    </aside>
+    <div class="col-md-8">
+      <h3>Spells</h3>
+      <%= render 'shared/feed'%>
+    </div>
+  </div>
+<% else %>
+  <div class="center jumbotron">
+    <h1>Welcome to Hogwarts School of Witchcraft and Wizardry</h1>
 
-<div class="center jumbotron">
-  <h1>Welcome to Hogwarts School of Witchcraft and Wizardry</h1>
+    <h2>
+      This is the home page for the
+      Hogwarts School of Witchcraft and Wizardry.
+    </h2>
 
-  <h2>
-    This is the home page for the
-    Hogwarts School of Witchcraft and Wizardry.
-  </h2>
+    <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
+  </div>
 
-  <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
-</div>
-
-<%= link_to image_tag("hogwarts_emblem.png", alt: "Hogwarts logo", width: "150"),
-                      "https://rubyonrails.org/",  target: "_blank" %>
+  <%= link_to image_tag("hogwarts_emblem.png", alt: "Hogwarts logo", width: "150"),
+                        "https://rubyonrails.org/",  target: "_blank" %>
+<% end %>                        

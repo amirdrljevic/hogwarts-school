@@ -33,4 +33,13 @@
       <%= link_to "Edit profile", edit_user_path(current_user), class: 'btn btn-primary' %>
     </section>
   </aside>
+  <div class="col-md-8">
+    <% if @user.spells.any? %>
+      <h3>Spells (<%= @user.spells.count %>)</h3>
+      <ol class="spells">
+        <%= render @spells %>
+      </ol>
+      <%= will_paginate @spells %>
+    <% end %>
+  </div>
 </div>
