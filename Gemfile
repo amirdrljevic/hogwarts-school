@@ -25,6 +25,10 @@ gem 'bcrypt',         '3.1.13'
 gem 'faker',          '2.11.0'
 gem 'will_paginate',           '3.3.0'
 gem 'bootstrap-will_paginate', '1.0.0'
+gem 'active_storage_validations', '0.8.9'
+gem 'image_processing', '~> 1.12', '>= 1.12.1'
+gem 'mini_magick',                '4.9.5'
+gem 'aws-sdk-s3', '1.87.0', require: false
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

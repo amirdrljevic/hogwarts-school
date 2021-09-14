@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]  
   def show
     @user = User.find(params[:id])
+    @spells = @user.spells.paginate(page: params[:page])
     #debugger
   end
 
@@ -36,7 +37,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.order('id asc').paginate(page: params[:page])
   end  
 
   private
@@ -52,15 +53,6 @@ class UsersController < ApplicationController
     end     
 
     # Before filters
-
-    # Confirms a logged-in user.
-    def logged_in_user
-      unless logged_in?
-        store_location        
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end    
 
     # Confirms the correct user.
     def correct_user
