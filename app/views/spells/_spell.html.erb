@@ -1,0 +1,15 @@
+<li id="spell-<%= spell.id %>">
+  <%= link_to gravatar_for(spell.user, size: 50), spell.user %>
+  <span class="user"><%= link_to spell.user.name, spell.user %></span>
+  <span class="content">
+    <%= spell.content %>
+    <%= image_tag spell.display_image if spell.image.attached? %>
+  </span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(spell.created_at) %> ago.
+    <% if current_user?(spell.user) %>
+      <%= link_to "delete", spell, method: :delete, 
+                                   data: { confirm: "You sure?" } %>
+    <% end %>
+  </span>
+</li>

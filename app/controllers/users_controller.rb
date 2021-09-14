@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.order('id asc').paginate(page: params[:page])
   end  
 
   private
