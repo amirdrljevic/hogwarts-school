@@ -30,8 +30,8 @@
           <%= @user.house %>
         </li>
       </ul>    
-      <% if current_user?(@user) %>
-        <%= link_to "Edit profile", edit_user_path(current_user), class: 'btn btn-primary' %>
+      <% if current_user.admin? || current_user?(@user) %>
+        <%= link_to "Edit profile", edit_user_path(@user), class: 'btn btn-primary' %>
       <% end %>
     </section>
     <section class="stats">

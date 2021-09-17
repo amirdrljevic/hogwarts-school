@@ -5,13 +5,18 @@
       <%= f.text_field :name, class: 'form-control' %>
 
       <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control', disabled: !f.object.new_record?%>
+      <%= f.email_field :email, class: 'form-control', disabled: !f.object.new_record? && !current_user.admin? %>
 
       <%= f.label :date_of_birth %>
       <%= f.date_field :date_of_birth, class: 'form-control' %>
 
       <%= f.label :bio, "Short biography" %>
       <%= f.text_area :bio, class: 'form-control' %>
+
+      <% if current_user.admin? %>
+        <%= f.label :house, "House" %>
+        <%= f.select(:house, ["Gryffindor", "Hufflepuff", "Slytherin", "Ravenclaw"], {}, { :class => 'form-control' } ) %>
+      <% end %>
 
       <%= f.label :has_muggle_relatives, class: "checkbox inline" do %>
         <%= f.check_box :has_muggle_relatives %>

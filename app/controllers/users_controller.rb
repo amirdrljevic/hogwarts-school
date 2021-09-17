@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :following, :followers]  
   before_action :correct_user,   only: [:edit, :update]  
+  before_action :admin_user,     only:  :destroy
 
   def show
     @user = User.find(params[:id])
@@ -41,6 +42,12 @@ class UsersController < ApplicationController
     @users = User.order('id asc').paginate(page: params[:page])
   end  
 
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "User deleted"
+    redirect_to users_url
+  end
+
   def following
     @title = "Following"
     @user  = User.find(params[:id])
@@ -57,6 +64,11 @@ class UsersController < ApplicationController
 
   private
 
+    # Confirm an admin user    
+    def admin_user
+      redirect_to(root_url) unless current_user.admin?
+    end
+
     def user_params
       params.require(:user).permit(:name, :email, :date_of_birth, :bio, :has_muggle_relatives, :password,
                                    :password_confirmation)
@@ -72,6 +84,6 @@ class UsersController < ApplicationController
     # Confirms the correct user.
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
+      redirect_to(root_url) unless current_user?(@user) || current_user.admin?
     end    
 end
