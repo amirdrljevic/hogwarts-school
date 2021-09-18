@@ -14,13 +14,25 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-    if @user.save
-      @user.send_activation_email
-      flash[:info] = "Dear #{ @user.name }, Please check your email to activate your account."
-      redirect_to root_url
-    else 
-      render 'new'
+    if current_user&.admin? 
+      @user = User.new(user_params_upd_for_admins)
+      @user.skip_this_for_dumbledore = true
+      if @user.save
+        @user.activate        
+        flash[:info] = "New profile for has been created."
+        redirect_to @user
+      else 
+        render 'new'
+      end        
+    else
+      @user = User.new(user_params_upd_for_admins)
+      if @user.save 
+        @user.send_activation_email
+        flash[:info] = "Please check your email to activate your account."
+        redirect_to root_url
+      else 
+        render 'new'
+      end    
     end
   end
 
@@ -30,11 +42,20 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params_upd)
-      flash[:success] = "Profile updated"
-      redirect_to @user
-    else
-      render 'edit'
+    if current_user.admin?
+      if @user.update(user_params_upd_for_admins)
+        flash[:success] = "Profile updated"
+        redirect_to @user
+      else
+        render 'edit'
+      end
+    else      
+      if @user.update(user_params_upd)
+        flash[:success] = "Profile updated"
+        redirect_to @user
+      else
+        render 'edit'
+      end
     end
   end
 
@@ -69,15 +90,23 @@ class UsersController < ApplicationController
       redirect_to(root_url) unless current_user.admin?
     end
 
+    #Strong parameters for creating new users
     def user_params
       params.require(:user).permit(:name, :email, :date_of_birth, :bio, :has_muggle_relatives, :password,
                                    :password_confirmation)
     end  
 
+    # Strong parameters for updating users
     def user_params_upd
       params.require(:user).permit(:name, :date_of_birth, :bio, :has_muggle_relatives, :password,
                                    :password_confirmation)
     end     
+
+    #Strong parameters for updating, for admins only
+    def user_params_upd_for_admins
+      params.require(:user).permit(:name, :email, :date_of_birth, :bio, :has_muggle_relatives, :house, :password,
+                                   :password_confirmation)
+    end  
 
     # Before filters
 

@@ -13,7 +13,7 @@
       <%= f.label :bio, "Short biography" %>
       <%= f.text_area :bio, class: 'form-control' %>
 
-      <% if current_user.admin? %>
+      <% if current_user&.admin?  %>  <!-- longer version: current_user.present? && current_user.admin? -->
         <%= f.label :house, "House" %>
         <%= f.select(:house, ["Gryffindor", "Hufflepuff", "Slytherin", "Ravenclaw"], {}, { :class => 'form-control' } ) %>
       <% end %>
