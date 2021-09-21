@@ -11,5 +11,22 @@
       <%= link_to "delete", spell, method: :delete, 
                                    data: { confirm: "You sure?" } %>
     <% end %>
+    <% if current_user.admin? %>
+    | 
+<%= link_to "edit", edit_spell_path(spell), { 'data-toggle' =>  "modal", 'data-target' => "#spell-form-edit" }  %>
+  
+
+    <% end %>
   </span>
 </li>
+
+
+<div id="spell-form-edit" class="modal fade">
+  <div class="modal-dialog modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Edit spell</h3>
+    </div>
+    <div class="modal-body"></div>
+  </div>
+</div>

@@ -14,6 +14,22 @@ class SpellsController < ApplicationController
     end
   end
 
+  def edit 
+  end
+
+  def update
+    respond_to do |format|
+      format.html
+      format.js 
+    end
+    flash[:success] = "Spell updated"
+    if request.referrer.nil? || request.referrer == spells_url
+      redirect_to root_url
+    else
+      redirect_to request.referrer
+    end
+  end
+
   def destroy
     @spell.destroy
     flash[:success] = "Spell deleted"
