@@ -14,6 +14,21 @@ class SpellsController < ApplicationController
     end
   end
 
+  def edit
+    @spell = Spell.find(params[:id])
+  end
+
+  def update
+    @spell = Spell.find(params[:id])
+    if @spell.update(spell_params)
+      flash[:success] = "Spell updated"
+      redirect_to user_path(@spell.user_id)
+    else
+      flash[:info] = "Can't be empty"
+      render 'edit'
+    end
+  end
+
   def destroy
     @spell.destroy
     flash[:success] = "Spell deleted"
@@ -23,7 +38,7 @@ class SpellsController < ApplicationController
       redirect_to request.referrer
     end
   end
-
+  
   private 
 
   def spell_params

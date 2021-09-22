@@ -7,9 +7,12 @@
   </span>
   <span class="timestamp">
     Posted <%= time_ago_in_words(spell.created_at) %> ago.
-    <% if current_user?(spell.user) %>
+    <% if current_user?(spell.user) || current_user.admin? %>
       <%= link_to "delete", spell, method: :delete, 
                                    data: { confirm: "You sure?" } %>
+    <% end %>
+    <% if current_user.admin? %>
+    | <%= link_to "edit", edit_spell_path(spell) %>
     <% end %>
   </span>
 </li>
