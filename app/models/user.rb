@@ -22,27 +22,48 @@ class User < ApplicationRecord
   #validates :has_muggle_relatives, presence: true, :inclusion => {:in => %w(true, false)}
   has_secure_password
 
-  PASSWORD_FORMAT = /\A
-  (?=.{8,})          # Must contain 8 or more characters
+PASSWORD_FORMAT_DIGIT = /\A 
   (?=.*\d)           # Must contain a digit
+  /x
+
+PASSWORD_FORMAT_UPPER_LOWER_CASE = /\A
   (?=.*[a-z])        # Must contain a lower case character
   (?=.*[A-Z])        # Must contain an upper case character
+  /x
+
+PASSWORD_FORMAT_SYMBOL = /\A
   (?=.*[[:^alnum:]]) # Must contain a symbol
 /x
 
 validates :password, 
   presence: true, 
   length: { minimum: 8 }, 
-  format: { with: PASSWORD_FORMAT }, 
+  format: { with: PASSWORD_FORMAT_SYMBOL, message: "must contain a symbol." }, 
   confirmation: true, 
   on: :create 
+
+validates :password,
+  format: { with: PASSWORD_FORMAT_DIGIT, message: "must contain a digit"},
+  on: :create
+
+validates :password,
+  format: { with: PASSWORD_FORMAT_UPPER_LOWER_CASE, message: "must contain lower or upper case"},
+  on: :create  
 
 validates :password, 
   allow_nil: true, 
   length: { minimum: 8 }, 
-  format: { with: PASSWORD_FORMAT }, 
+  format: { with: PASSWORD_FORMAT_SYMBOL, message: "must contain a symbol." }, 
   confirmation: true, 
   on: :update
+
+validates :password,
+  format: { with: PASSWORD_FORMAT_DIGIT, message: "must contain a digit"},
+  on: :update
+
+validates :password,
+  format: { with: PASSWORD_FORMAT_UPPER_LOWER_CASE, message: "must contain lower or upper case"},
+  on: :update  
 
   # Returns the hash digest of the given string.
   def User.digest(string)
