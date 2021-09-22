@@ -14,19 +14,18 @@ class SpellsController < ApplicationController
     end
   end
 
-  def edit 
+  def edit
+    @spell = Spell.find(params[:id])
   end
 
   def update
-    respond_to do |format|
-      format.html
-      format.js 
-    end
-    flash[:success] = "Spell updated"
-    if request.referrer.nil? || request.referrer == spells_url
-      redirect_to root_url
+    @spell = Spell.find(params[:id])
+    if @spell.update(spell_params)
+      flash[:success] = "Spell updated"
+      redirect_to user_path(@spell.user_id)
     else
-      redirect_to request.referrer
+      flash[:info] = "Can't be empty"
+      render 'edit'
     end
   end
 
@@ -39,7 +38,7 @@ class SpellsController < ApplicationController
       redirect_to request.referrer
     end
   end
-
+  
   private 
 
   def spell_params
