@@ -35,13 +35,6 @@ PASSWORD_FORMAT_SYMBOL = /\A
   (?=.*[[:^alnum:]]) # Must contain a symbol
 /x
 
-validates :password, 
-  presence: true, 
-  length: { minimum: 8 }, 
-  format: { with: PASSWORD_FORMAT_SYMBOL, message: "must contain a symbol." }, 
-  confirmation: true, 
-  on: :create 
-
 validates :password,
   format: { with: PASSWORD_FORMAT_DIGIT, message: "must contain a digit"},
   on: :create
@@ -51,19 +44,28 @@ validates :password,
   on: :create  
 
 validates :password, 
+  presence: true, 
+  length: { minimum: 8 }, 
+  format: { with: PASSWORD_FORMAT_SYMBOL, message: "must contain a symbol." }, 
+  confirmation: true, 
+  on: :create 
+  
+  validates :password,
+  allow_nil: true, 
+  format: { with: PASSWORD_FORMAT_DIGIT, message: "must contain a digit"},
+  on: :update
+
+validates :password,
+  allow_nil: true, 
+  format: { with: PASSWORD_FORMAT_UPPER_LOWER_CASE, message: "must contain lower or upper case"},
+  on: :update  
+
+validates :password, 
   allow_nil: true, 
   length: { minimum: 8 }, 
   format: { with: PASSWORD_FORMAT_SYMBOL, message: "must contain a symbol." }, 
   confirmation: true, 
   on: :update
-
-validates :password,
-  format: { with: PASSWORD_FORMAT_DIGIT, message: "must contain a digit"},
-  on: :update
-
-validates :password,
-  format: { with: PASSWORD_FORMAT_UPPER_LOWER_CASE, message: "must contain lower or upper case"},
-  on: :update  
 
   # Returns the hash digest of the given string.
   def User.digest(string)
